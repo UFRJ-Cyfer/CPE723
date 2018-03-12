@@ -1,4 +1,4 @@
-%% Questão 5
+% Questão 5
 
 % Esta função está implementada no arquivo Custo5.m
 % e ela possui a seguinte definição:
@@ -23,9 +23,10 @@ fim = 1; n = 0; k = 1; i=0;
 
 X0 = randn(M,1);
 
+J = [];
 %Custo e Estados Iniciais.
 X = X0;
-J(:,1) = Custo5(X0);
+J(1) = Custo5(X0);
 
 Xmin = X0;
 Jmin = J(:,1);
@@ -33,19 +34,19 @@ Jmin = J(:,1);
 while (fim)
     
     n = n+1;
-    i = i+1;
+    i = i+1; 
     
     %Cálculo do estado perturbado (por uma distribuição Gaussiana).
-    X(:,i+1) = X(:,i) + ep*(2*randn(size(X(:,i))));
+    X = [X X(:,i) + ep*(randn(size(X(:,i))))];
     
     %Cálculo dos custos atual e perturbado.
-    J(:,i+1) = Custo5(X(:,i+1));
-    J(:,i) = Custo5(X(:,i));
+    J(i+1) = Custo5(X(:,i+1));
+    J(i) = Custo5(X(:,i));
 
-    DJ = J(:,i+1) - J(:,i);
+    DJ = J(i+1) - J(i);
     
-    if J(:,i) < Jmin
-    Jmin = J(:,i); Xmin = X(:,i);
+    if J(i) < Jmin
+    Jmin = J(i); Xmin = X(:,i);
     end
     
     %Algoritmo de Metrópolis
